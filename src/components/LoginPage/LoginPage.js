@@ -11,7 +11,9 @@ import React, { Component, PropTypes } from 'react';
 import s from './LoginPage.scss';
 import withStyles from '../../decorators/withStyles';
 
-const title = 'Log In';
+import Button from '../Button';
+
+const title = 'Swerve - Log In';
 
 @withStyles(s)
 class LoginPage extends Component {
@@ -24,12 +26,26 @@ class LoginPage extends Component {
     this.context.onSetTitle(title);
   }
 
+  login(endpoint) {
+    return function trueLogin() {
+      window.location.href = `http://localhost:3000/auth/${endpoint}`;
+    };
+  }
+
   render() {
     return (
       <div className={s.root}>
         <div className={s.container}>
           <h1>{title}</h1>
-          <p>...</p>
+          <div>
+            <Button buttonSpecialClass={['facebook', 'login']} text="Login with Facebook" onClick={this.login('facebook')} />
+          </div>
+          <div>
+            <Button buttonSpecialClass={['twitter', 'login']} text="Login with Twitter" onClick={this.login('twitter')} />
+          </div>
+          <div>
+            <Button buttonSpecialClass={['reddit', 'login']}  text="Login with reddit" onClick={this.login('reddit')} />
+          </div>
         </div>
       </div>
     );

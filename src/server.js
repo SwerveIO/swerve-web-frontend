@@ -15,6 +15,7 @@ import ReactDOM from 'react-dom/server';
 import Router from './routes';
 import Html from './components/Html';
 import assets from './assets';
+import cookieParser from 'cookie-parser';
 import { port } from './config';
 
 const server = global.server = express();
@@ -22,12 +23,21 @@ const server = global.server = express();
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
+server.use(cookieParser());
 server.use(express.static(path.join(__dirname, 'public')));
-
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
 server.use('/api/content', require('./api/content'));
+server.use('/api/feed', require('./api/feed'));
+
+// Initialization route
+// -----------------------------------------------------------------------------
+server.get('/initiate', async (req, res) => {
+  const jwt = req.query.qt;
+  res.cookie('swerve-jwt', jwt);
+  res.redirect('/feed');
+});
 
 //
 // Register server-side rendering middleware

@@ -9,6 +9,7 @@
 
 import React from 'react';
 import Router from 'react-routing/src/Router';
+import cookie from 'react-cookie';
 import fetch from './core/fetch';
 import App from './components/App';
 import ContentPage from './components/ContentPage';
@@ -17,6 +18,7 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import NotFoundPage from './components/NotFoundPage';
 import ErrorPage from './components/ErrorPage';
+import FeedPage from './components/FeedPage';
 
 const router = new Router(on => {
   on('*', async (state, next) => {
@@ -24,11 +26,20 @@ const router = new Router(on => {
     return component && <App context={state.context}>{component}</App>;
   });
 
+  on('/', async () => <LoginPage />);
+
   on('/contact', async () => <ContactPage />);
 
   on('/login', async () => <LoginPage />);
 
   on('/register', async () => <RegisterPage />);
+
+  on('/feed', async() => {
+    const response = await fetch(`/api/feed/${cookie.load('swerve-jwt')}`);
+    const feed = await response.json();
+
+    return feed && <FeedPage {...feed} />;
+  });
 
   on('*', async (state) => {
     const response = await fetch(`/api/content?path=${state.path}`);
