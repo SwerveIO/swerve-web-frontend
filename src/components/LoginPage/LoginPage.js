@@ -38,13 +38,13 @@ class LoginPage extends Component {
         <div className={s.container}>
           <h1>{title}</h1>
           <div>
-            <Button buttonSpecialClass={['facebook', 'login']} text="Login with Facebook" onClick={this.login('facebook')} />
+            <Button buttonSpecialClass={['facebook', 'login']} icon="fa-facebook-official" text="Login with Facebook" onClick={this.login('facebook')} />
           </div>
           <div>
-            <Button buttonSpecialClass={['twitter', 'login']} text="Login with Twitter" onClick={this.login('twitter')} />
+            <Button buttonSpecialClass={['twitter', 'login']} icon="fa-twitter" text="Login with Twitter" onClick={this.login('twitter')} />
           </div>
           <div>
-            <Button buttonSpecialClass={['reddit', 'login']}  text="Login with reddit" onClick={this.login('reddit')} />
+            <Button buttonSpecialClass={['reddit', 'login']} icon="fa-reddit" text="Login with reddit" onClick={this.login('reddit')} />
           </div>
         </div>
       </div>
